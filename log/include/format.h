@@ -14,14 +14,10 @@ struct Info {
 int getPrecision(const std::string& subfmt) {
     size_t len = subfmt.length();
     size_t index = 0;
-    if (index + 1 > len) 
-        return -1;
-    if (subfmt[index] != '.') 
+    if (len < 2 || subfmt[index] != '.') 
         return -1;
 
     ++index;
-    if (index + 1 > len) 
-        return -1;
     if (subfmt[index] > '9' || subfmt[index] < '0') 
         return -1;
     return static_cast<int>(subfmt[index] - '0');
@@ -29,15 +25,18 @@ int getPrecision(const std::string& subfmt) {
 
 Info getInfo(const std::string& fmt)
 {
-    Info info;
+    Info info{0, 0 , 0, -1};
 
     size_t lp = fmt.find('{', 0);
     if (lp == std::string::npos) return info;
     size_t rp = fmt.find('}', lp);
     if (rp == std::string::npos) return info;
 
-    if (lp + 1 > fmt.length()) return info;
+    info.start = lp;
+    info.end = rp;
+
     if (rp - lp < 2) return info;
+
     switch (fmt[lp + 1]) {
         case '+':
         case '-':
@@ -49,8 +48,6 @@ Info getInfo(const std::string& fmt)
             info.precision = getPrecision(fmt.substr(lp + 1, rp - lp - 1));
     }
 
-    info.start = lp;
-    info.end = rp;
     return info;
 }
 
