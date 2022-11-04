@@ -1,17 +1,15 @@
 #include "include/file_logger.h"
-#include "include/stdout_logger.h"
+#include "include/log.h"
 
 #include <fstream>
 
-
 int main(){
-    // std::ofstream file;
-    // file.open("D:\\a.txt");
-    // file << "aaa";
-    // file.close();
+    zlog::info("this is {.1f} formatted string", 1.f);
+    zlog::setLevel(zlog::ERROR);
+    zlog::info("this is {.1f} formatted string", 2.f);
+    zlog::setLevel(zlog::DEBUG);
+    zlog::info("this is {.1f} formatted string", 3.f);
     std::string dir = "D:\\";
-    zlog::FileLogger log(dir, false);
-    log.warn("this is {+.2f} format {afdafd} aaa{}", 21.34, "ser");
-    zlog::StdoutLogger loggg;
-    loggg.error("this is {+.2f} format {afdafd} aaa{}", 21.34, "ser");
+    zlog::setDefaultLogger(std::make_shared<zlog::FileLogger>(dir, true));
+    zlog::info("this is {.1f} formatted string", 4.f);
 }

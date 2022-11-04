@@ -81,6 +81,7 @@ void FileLogger::log(const std::string& str)
 std::string FileLogger::getSuffix()
 {
     std::ostringstream ss;
+    ss << name_ << '-';
     std::time_t now = std::time(0);
     std::tm * ltm = std::localtime(&now);
     ss << 1900 + ltm->tm_year << '-' 

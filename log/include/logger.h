@@ -13,10 +13,13 @@ protected:
     std::string name_;
     Level level_;
 public:
-    Logger() : name_(""), level_(Level::INFO) {}
+    Logger() : name_("DefaultLogger"), level_(Level::INFO) {}
     Logger(std::string& name) : name_(name), level_(Level::INFO) {}
     Logger(std::string& name, Level level) : name_(name), level_(level) {}
     virtual ~Logger(){}
+
+    void setName(std::string& name);
+    void setLevel(Level level);
 
     virtual void log(const std::string& str) {}
 
@@ -39,6 +42,16 @@ public:
 
 // ----------------------------------------------------------------------------
 // implementation
+void Logger::setName(std::string& name)
+{
+    name_ = std::move(name);
+}
+
+void Logger::setLevel(Level level)
+{
+    level_ = level;
+}
+
 template<typename ...Args>
 void Logger::log(Level level, const std::string& str, Args&&... args)
 {

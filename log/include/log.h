@@ -1,52 +1,49 @@
-#include "format.h"
+#ifndef LOG_H_
+#define LOG_H_
+
+#include "registry.h"
 
 namespace zlog {
 
-
-enum Level : int {
-    DEBUG = 0,
-    INFO,
-    WARN,
-    ERROR
-};
-
-Level glevel = Level::INFO;
-
-template<typename ...Args>
-void log(const std::string& str, Args&&... args)
+void setName(std::string& name)
 {
-    format(std::cout, str, std::forward<Args>(args)...);
+    Registry::instance().defaultLogger()->setName(name);
 }
 
-template<typename ...Args>
-void log(Level level, const std::string& str, Args&&... args)
+void setLevel(Level level)
 {
-    if (level < glevel) return;
-    log(str, std::forward<Args>(args)...);
+    Registry::instance().defaultLogger()->setLevel(level);
+}
+
+void setDefaultLogger(std::shared_ptr<Logger> new_default_logger)
+{
+    Registry::instance().setDefaultLogger(new_default_logger);
 }
 
 template<typename ...Args>
 void debug(const std::string& str, Args&&... args)
 {
-    log(Level::DEBUG, str, std::forward<Args>(args)...);
+    Registry::instance().defaultLogger()->debug(str, std::forward<Args>(args)...);
 }
 
 template<typename ...Args>
 void info(const std::string& str, Args&&... args)
 {
-    log(Level::INFO, str, std::forward<Args>(args)...);
+    Registry::instance().defaultLogger()->info(str, std::forward<Args>(args)...);
 }
 
 template<typename ...Args>
 void warn(const std::string& str, Args&&... args)
 {
-    log(Level::WARN, str, std::forward<Args>(args)...);
+    Registry::instance().defaultLogger()->warn(str, std::forward<Args>(args)...);
 }
 
 template<typename ...Args>
 void error(const std::string& str, Args&&... args)
 {
-    log(Level::ERROR, str, std::forward<Args>(args)...);
+    Registry::instance().defaultLogger()->error(str, std::forward<Args>(args)...);
 }
 
 } // namespace log
+
+#endif
