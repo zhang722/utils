@@ -10,11 +10,18 @@
 
 namespace zlog {
 
+// Logger who can write msg to a log file. Meanwhile, you can determine 
+// wheither to print msg to console or not. A root dir should be given
+// to save log file.
+// The log file will be named like "name_-YYYY-MM-DD.txt".
 class FileLogger : public Logger
 {
 protected:
+    // Should be given whenever.
     std::string root_dir_;
+    // Log file name.
     std::string dir_suffix_;
+    // If true, the msg will be printed to console too.
     bool should_cout_;
 public:
     FileLogger() = delete;
@@ -26,6 +33,7 @@ public:
 
     void log(const std::string& str) override;
 private:
+    // Generate filename using current time.
     std::string getSuffix();
 };
 

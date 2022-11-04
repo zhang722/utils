@@ -7,20 +7,27 @@
 
 namespace zlog {
 
+// Base class for logging.
+// If it is used, nothing will be logged.
 class Logger
 {
 protected:
+    // Every logger has a name, for FileLogger, name will be used when creating
+    // log file.
     std::string name_;
+    // Every logger has a level from DEBUG to ERROR.
     Level level_;
 public:
     Logger() : name_("DefaultLogger"), level_(Level::INFO) {}
     Logger(std::string& name) : name_(name), level_(Level::INFO) {}
     Logger(std::string& name, Level level) : name_(name), level_(level) {}
+    // Note that the deconstructor is virtual.
     virtual ~Logger(){}
 
     void setName(std::string& name);
     void setLevel(Level level);
 
+    // The real function who logs.
     virtual void log(const std::string& str) {}
 
     template<typename ...Args>

@@ -8,10 +8,12 @@
 
 namespace zlog {
 
+// This class if for maintaining a global default logger. The design pattern 
+// called Singleton Pattern is used.
 class Registry
 {
 public:
-    // prohibit copy constructor and copy assignment 
+    // Prohibit copy constructor and copy assignment.
     Registry(const Registry&) = delete;
     Registry& operator=(const Registry&) = delete;
 
@@ -19,7 +21,7 @@ public:
     std::shared_ptr<Logger> defaultLogger();
     void setDefaultLogger(std::shared_ptr<Logger> new_default_logger);
 private:
-    // make constructor private
+    // Make constructor private.
     Registry();
     ~Registry();
 

@@ -5,6 +5,7 @@
 
 namespace zlog {
     
+// Logger using std::cout to print msg to console.
 class StdoutLogger : public Logger
 {
 public:
