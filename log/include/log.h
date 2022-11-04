@@ -1,6 +1,7 @@
 #include "format.h"
 
-namespace log {
+namespace zlog {
+
 
 enum Level : int {
     DEBUG = 0,
