@@ -4,6 +4,8 @@
 #include <vector>
 #include <iomanip>
 
+namespace log {
+
 struct Info {
     size_t start;
     size_t end;
@@ -77,4 +79,6 @@ void format(Stream& stream, const std::string& str, T&& value, Args&&... args)
         stream << str.substr(info.end + 1);
     }
 }
+
+} // namespace log
 

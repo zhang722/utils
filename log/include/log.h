@@ -1,5 +1,7 @@
 #include "format.h"
 
+namespace log {
+
 enum Level : int {
     DEBUG = 0,
     INFO,
@@ -45,3 +47,5 @@ void error(const std::string& str, Args&&... args)
 {
     log(Level::ERROR, str, std::forward<Args>(args)...);
 }
+
+} // namespace log
